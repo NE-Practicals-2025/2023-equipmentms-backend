@@ -151,32 +151,34 @@ const searchEmployee = async (req: Request, res: Response) => {
     const { query } = req.params;
     const employee = await prisma.employee.findMany({
       where: {
-        firstName: { contains: query, mode: "insensitive" },
-        lastName: { contains: query, mode: "insensitive" },
-        email: { contains: query, mode: "insensitive" },
-        telephone: { contains: query, mode: "insensitive" },
-        department: { contains: query, mode: "insensitive" },
-        position: { contains: query, mode: "insensitive" },
-        nationalId: { contains: query, mode: "insensitive" },
-        laptopManufacturer: { contains: query, mode: "insensitive" },
-        laptopModel: { contains: query, mode: "insensitive" },
-        serialNumber: { contains: query, mode: "insensitive" },
+        OR: [
+            { firstName: { contains: query, mode: "insensitive" } },
+            { lastName: { contains: query, mode: "insensitive" } },
+            { email: { contains: query, mode: "insensitive" } },
+            { telephone: { contains: query, mode: "insensitive" } },
+            { department: { contains: query, mode: "insensitive" } },
+            { position: { contains: query, mode: "insensitive" } },
+            { nationalId: { contains: query, mode: "insensitive" } },
+            { laptopManufacturer: { contains: query, mode: "insensitive" } },
+            { laptopModel: { contains: query, mode: "insensitive" } },
+            { serialNumber: { contains: query, mode: "insensitive" } },
+        ],
       },
     });
     return ServerResponse.success(res, "Employee fetched successfully", {
       employee,
     });
   } catch (error) {
-    return ServerResponse.error(res, "Error occured", { error });
+    return ServerResponse.error(res, "Error occurred", { error });
   }
 };
 
 const deleteEmployeeById = async (req: Request, res: Response) => {
   try {
-    const user = await prisma.user.delete({ where: { id: req.params.id } });
-    return ServerResponse.success(res, "User deleted successfully", { user });
+    const employee = await prisma.employee.delete({ where: { id: req.params.id } });
+    return ServerResponse.success(res, "Employee deleted successfully", { employee });
   } catch (error) {
-    return ServerResponse.error(res, "Error occured", { error });
+    return ServerResponse.error(res, "Error occurred", { error });
   }
 };
 
