@@ -34,7 +34,6 @@ model User {
     id                   String              @id @default(uuid())
     names                String
     email                String              @unique
-    telephone            String?             @unique
     password             String
     profilePicture       String              @default("https://firebasestorage.googleapis.com/v0/b/relaxia-services.appspot.com/o/relaxia-profiles%2Fblank-profile-picture-973460_960_720.webp?alt=media") @map("profile_picture")
     role                 Role                @default(USER)
@@ -48,4 +47,20 @@ model User {
     updatedAt            DateTime            @updatedAt @map("updated_at")
 
     @@map("users")
+}
+model Employee {
+    id                   String              @id @default(uuid())
+    firstName                String
+    lastName                String
+    nationalId           String
+    email                String              @unique
+    telephone            String
+    department            String
+    position            String
+    laptopManufacturer            String
+    laptopModel            String
+    serialNumber            String
+    createdAt            DateTime            @default(now()) @map("created_at")
+    updatedAt            DateTime            @updatedAt @map("updated_at")
+    @@map("employees")
 }

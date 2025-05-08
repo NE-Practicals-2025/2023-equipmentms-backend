@@ -11,7 +11,7 @@ const prisma =
     errorFormat: "minimal",
     datasources: {
       db: {
-        url: process.env.DATABASE_URL,
+        url: "postgresql://postgres:anny@localhost:5432/equipmentmsdb?schema=public",
       },
     },
   });
