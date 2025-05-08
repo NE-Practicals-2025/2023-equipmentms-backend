@@ -15,7 +15,8 @@
     "prisma:all": "yarn prisma:migrate && yarn prisma:gen",
     "prisma:seed": "ts-node src/seeders/seed.ts",
     "docker:build": "docker build -t davinyiringabo/ne-nodejs .",
-    "docker:run": "docker run -p 4002:4002 davinyiringabo/ne-nodejs"
+    "docker:run": "docker run -p 4002:4002 davinyiringabo/ne-nodejs",
+    "format": "prettier --write ."
   },
   "author": "davinyiringabo",
   "license": "MIT",

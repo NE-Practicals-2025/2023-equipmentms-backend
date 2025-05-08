@@ -1,32 +1,35 @@
-import { config } from 'dotenv';
-import nodemailer from 'nodemailer'
+import { config } from "dotenv";
+import nodemailer from "nodemailer";
 
 config();
 
 const transporter = nodemailer.createTransport({
-    service: "gmail",
-    pool: true,
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: false,
-    auth: {
-        user: process.env.MAIL_USER,
-        pass: process.env.MAIL_PASSWORD
-    }
+  service: "gmail",
+  pool: true,
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: false,
+  auth: {
+    user: process.env.MAIL_USER,
+    pass: process.env.MAIL_PASSWORD,
+  },
 });
 
 transporter.verify(function (error, success) {
-    console.log("Server is ready to take our messages");
+  console.log("Server is ready to take our messages");
 });
 
-const sendAccountVerificationEmail = async (email: string, names: string, verificationToken: string) => {
-    try {
-        const info = transporter.sendMail({
-            from: process.env.MAIL_USER,
-            to: email,
-            subject: "NE NodeJS Account Verification",
-            html:
-                `
+const sendAccountVerificationEmail = async (
+  email: string,
+  names: string,
+  verificationToken: string,
+) => {
+  try {
+    const info = transporter.sendMail({
+      from: process.env.MAIL_USER,
+      to: email,
+      subject: "NE NodeJS Account Verification",
+      html: `
             <!DOCTYPE html>
                 <html>
                 <body>
@@ -38,27 +41,29 @@ const sendAccountVerificationEmail = async (email: string, names: string, verifi
                     <p>Best regards,<br>NE NodeJS</p>
                 </body>
             </html>
-            `
+            `,
+    });
 
-        });
-
-        return {
-            message: "Email sent successfully",
-            status: true
-        };
-    } catch (error) {
-        return { message: "Unable to send email", status: false };
-    }
+    return {
+      message: "Email sent successfully",
+      status: true,
+    };
+  } catch (error) {
+    return { message: "Unable to send email", status: false };
+  }
 };
 
-const sendPaswordResetEmail = async (email: string, names: string, passwordResetToken: string) => {
-    try {
-        const info = transporter.sendMail({
-            from: process.env.MAIL_USER,
-            to: email,
-            subject: "NE NodeJS Password Reset",
-            html:
-                `
+const sendPaswordResetEmail = async (
+  email: string,
+  names: string,
+  passwordResetToken: string,
+) => {
+  try {
+    const info = transporter.sendMail({
+      from: process.env.MAIL_USER,
+      to: email,
+      subject: "NE NodeJS Password Reset",
+      html: `
             <!DOCTYPE html>
                 <html>
                 <body>
@@ -70,17 +75,16 @@ const sendPaswordResetEmail = async (email: string, names: string, passwordReset
                     <p>Best regards,<br>NE NodeJS</p>
                 </body>
             </html>
-            `
+            `,
+    });
 
-        });
-
-        return {
-            message: "Email sent successfully",
-            status: true
-        };
-    } catch (error) {
-        return { message: "Unable to send email", status: false };
-    }
+    return {
+      message: "Email sent successfully",
+      status: true,
+    };
+  } catch (error) {
+    return { message: "Unable to send email", status: false };
+  }
 };
 
 export { sendAccountVerificationEmail, sendPaswordResetEmail };
