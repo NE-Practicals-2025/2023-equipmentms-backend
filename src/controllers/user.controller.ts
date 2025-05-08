@@ -11,16 +11,13 @@ config()
 
 const createUser = async (req: Request, res: Response) => {
     try {
-        const { email, names, telephone, password } = req.body
-        console.log("body", req.body)
+        const { email, names, password } = req.body
         const hashedPassword = hashSync(password, 10)
-        console.log("hashedPassword", hashedPassword)
         const user = await prisma.user.create({
             data: {
                 email,
                 names,
                 password: hashedPassword,
-                telephone,
             }
         })
         const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY as string, { expiresIn: '3d' })
@@ -37,13 +34,12 @@ const createUser = async (req: Request, res: Response) => {
 
 const updateUser: any = async (req: AuthRequest, res: Response) => {
     try {
-        const { email, names, telephone } = req.body
+        const { email, names } = req.body
         const user = await prisma.user.update({
             where: { id: req.user.id },
             data: {
                 email,
                 names,
-                telephone,
             }
         })
         return ServerResponse.success(res, "User updated successfully", { user })
